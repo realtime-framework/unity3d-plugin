@@ -1,0 +1,638 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Foundation.Tasks</name>
+    </assembly>
+    <members>
+        <member name="T:Foundation.Tasks.TaskStatus">
+            <summary>
+            Describes the Tasks State
+            </summary>
+        </member>
+        <member name="F:Foundation.Tasks.TaskStatus.Created">
+            <summary>
+            Ready to run
+            </summary>
+        </member>
+        <member name="F:Foundation.Tasks.TaskStatus.Running">
+            <summary>
+            Working
+            </summary>
+        </member>
+        <member name="F:Foundation.Tasks.TaskStatus.Faulted">
+            <summary>
+            Exception as thrown or otherwise stopped early
+            </summary>
+        </member>
+        <member name="F:Foundation.Tasks.TaskStatus.Success">
+            <summary>
+            Complete without error
+            </summary>
+        </member>
+        <member name="F:Foundation.Tasks.TaskStatus.Disposed">
+            <summary>
+            Dispose has been called
+            </summary>
+        </member>
+        <member name="T:Foundation.Tasks.TaskStrategy">
+            <summary>
+            Execution strategy for the Task
+            </summary>
+        </member>
+        <member name="F:Foundation.Tasks.TaskStrategy.BackgroundThread">
+            <summary>
+            Dispatches the task to a background thread
+            </summary>
+        </member>
+        <member name="F:Foundation.Tasks.TaskStrategy.MainThread">
+            <summary>
+            Dispatches the task to the main thread
+            </summary>
+        </member>
+        <member name="F:Foundation.Tasks.TaskStrategy.CurrentThread">
+            <summary>
+            Dispatches the task to the current thread
+            </summary>
+        </member>
+        <member name="F:Foundation.Tasks.TaskStrategy.Coroutine">
+            <summary>
+            Runs the task as a coroutine
+            </summary>
+        </member>
+        <member name="F:Foundation.Tasks.TaskStrategy.Custom">
+            <summary>
+            Does nothing. For custom tasks.
+            </summary>
+        </member>
+        <member name="T:Foundation.Tasks.UnityTask">
+             <summary>
+             A task encapsulates future work that may be waited on.
+             - Support running actions in background threads 
+             - Supports running coroutines with return results
+             - Use the WaitForRoutine method to wait for the task in a coroutine
+             </summary>
+             <example>
+             <code>
+                 var task = Task.Run(() =>
+                 {
+                    //Debug.Log does not work in
+                    Debug.Log("Sleeping...");
+                    Task.Delay(2000);
+                    Debug.Log("Slept");
+                });
+                // wait for it
+                yield return StartCoroutine(task.WaitRoutine());
+            
+                // check exceptions
+                if(task.IsFaulted)
+                    Debug.LogException(task.Exception)
+            </code>
+            </example>
+             <summary>
+             A task encapsulates future work that may be waited on.
+             - Support running actions in background threads 
+             - Supports running coroutines with return results
+             - Use the WaitForRoutine method to wait for the task in a coroutine
+             </summary>
+             <example>
+             <code>
+                 var task = Task.Run(() =>
+                 {
+                    //Debug.Log does not work in
+                    Debug.Log("Sleeping...");
+                    Task.Delay(2000);
+                    Debug.Log("Slept");
+                });
+                // wait for it
+                yield return StartCoroutine(task.WaitRoutine());
+            
+                // check exceptions
+                if(task.IsFaulted)
+                    Debug.LogException(task.Exception)
+            </code>
+            </example>
+        </member>
+        <member name="F:Foundation.Tasks.UnityTask.DisableMultiThread">
+            <summary>
+            Forces use of a single thread for debugging
+            </summary>
+        </member>
+        <member name="F:Foundation.Tasks.UnityTask.LogErrors">
+            <summary>
+            Logs Exceptions
+            </summary>
+        </member>
+        <member name="F:Foundation.Tasks.UnityTask.Strategy">
+            <summary>
+            Execution option
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.#ctor">
+            <summary>
+            Creates a new task
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.#ctor(Foundation.Tasks.TaskStrategy)">
+            <summary>
+            Creates a new task
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.#ctor(System.Exception)">
+            <summary>
+            Creates a new Task in a Faulted state
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.#ctor(System.Action)">
+            <summary>
+            Creates a new background task
+            </summary>
+            <param name="action"></param>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.#ctor(System.Action,Foundation.Tasks.TaskStrategy)">
+            <summary>
+            Creates a new Task 
+            </summary>
+            <param name="action"></param>
+            <param name="mode"></param>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.#ctor(System.Collections.IEnumerator)">
+            <summary>
+            Creates a new Coroutine Task
+            </summary>
+            <param name="action"></param>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.#ctor(System.Collections.IEnumerator,System.Object)">
+            <summary>
+            Creates a new Coroutine Task
+            </summary>
+            <param name="action"></param>
+            <param name="param"></param>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.#ctor(System.Delegate,System.Object)">
+            <summary>
+            Creates a new background task with a parameter
+            </summary>
+            <param name="action"></param>
+            <param name="paramater"></param>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.#ctor(System.Delegate,System.Object,Foundation.Tasks.TaskStrategy)">
+            <summary>
+            Creates a new Task with a parameter
+            </summary>
+            <param name="action"></param>
+            <param name="paramater"></param>
+            <param name="mode"></param>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.Execute">
+            <summary>
+            Runs the action or coroutine
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.RunOnBackgroundThread">
+            <summary>
+            Executes the task in background thread
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.RunOnCurrentThread">
+            <summary>
+            Executes the task in background thread
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.RunOnMainThread">
+            <summary>
+            Executes the task on the main thread
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.RunAsCoroutine">
+            <summary>
+            Executes the task in a coroutine
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.OnTaskComplete">
+            <summary>
+            Called on Complete. Runs ContinueWith actions.
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.OnRoutineComplete">
+            <summary>
+            Called after a coroutine task. Sets status to success if not failed.
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.Start">
+            <summary>
+            Executes the task
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.ContinueWith(System.Action{Foundation.Tasks.UnityTask})">
+            <summary>
+            Called after the task is complete
+            </summary>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.ContinueWith``1(System.Action{``0})">
+            <summary>
+            Called after the task is complete
+            </summary>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.ThrowIfFaulted">
+            <summary>
+            will throw if faulted
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.WaitRoutine">
+            <summary>
+            Wait for the task to complete in an iterator coroutine
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.Wait">
+            <summary>
+            Waits for the task to complete
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.Delay(System.Int32)">
+            <summary>
+            Thread.Sleep
+            </summary>
+            <param name="millisecondTimeout"></param>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.Dispose">
+            <summary>
+            Clears variables, Sets status to Created
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.Run(System.Action)">
+            <summary>
+            Creates a new running task
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.RunOnMain(System.Action)">
+            <summary>
+            Creates a new running task
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.RunOnCurrent(System.Action)">
+            <summary>
+            Creates a new running task
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.Run``1(System.Action{``0},``0)">
+            <summary>
+            Creates a new running task
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.RunOnMain``1(System.Action{``0},``0)">
+            <summary>
+            Creates a new running task
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.RunOnCurrent``1(System.Action{``0},``0)">
+            <summary>
+            Creates a new running task
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.RunCoroutine(System.Collections.IEnumerator)">
+            <summary>
+            Creates a new running task
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.RunCoroutine(System.Func{System.Collections.IEnumerator})">
+            <summary>
+            Creates a new running task
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.RunCoroutine(System.Func{Foundation.Tasks.UnityTask,System.Collections.IEnumerator})">
+            <summary>
+            Creates a new running task
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.Run``1(System.Func{``0})">
+            <summary>
+            Creates a new running task
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.Run``2(System.Func{``0,``1},``0)">
+            <summary>
+            Creates a new running task
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.RunOnMain``1(System.Func{``0})">
+            <summary>
+            Creates a new running task
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.RunOnMain``2(System.Func{``0,``1},``0)">
+            <summary>
+            Creates a new running task
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.RunOnCurrent``1(System.Func{``0})">
+            <summary>
+            Creates a new running task
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.RunOnCurrent``2(System.Func{``0,``1},``0)">
+            <summary>
+            Creates a new running task
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.RunCoroutine``1(System.Collections.IEnumerator)">
+            <summary>
+            Creates a new running task
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.RunCoroutine``1(System.Func{Foundation.Tasks.UnityTask{``0},System.Collections.IEnumerator})">
+            <summary>
+            Creates a task which passes the task as a parameter
+            </summary>
+        </member>
+        <member name="F:Foundation.Tasks.UnityTask._successTask">
+            <summary>
+            A default task in the success state
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.SuccessTask``1(``0)">
+            <summary>
+            A default task in the success state
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.SuccessTask">
+            <summary>
+            A default task in the faulted state
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.FailedTask(System.String)">
+            <summary>
+            A default task in the faulted state
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.FailedTask(System.Exception)">
+            <summary>
+            A default task in the faulted state
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.FailedTask``1(System.String)">
+            <summary>
+            A default task in the faulted state
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.FailedTask``1(System.Exception)">
+            <summary>
+            A default task in the faulted state
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.FailedTask``1(System.String,``0)">
+            <summary>
+            A default task in the faulted state
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask.FailedTask``1(System.Exception,``0)">
+            <summary>
+            A default task in the faulted state
+            </summary>
+        </member>
+        <member name="P:Foundation.Tasks.UnityTask.Paramater">
+            <summary>
+            Parameter
+            </summary> 
+        </member>
+        <member name="P:Foundation.Tasks.UnityTask.Status">
+            <summary>
+            Current runtime state of the task
+            </summary>
+        </member>
+        <member name="P:Foundation.Tasks.UnityTask.Exception">
+            <summary>
+            Exception, caught from inner action
+            </summary>
+        </member>
+        <member name="P:Foundation.Tasks.UnityTask.IsRunning">
+            <summary>
+            !IsCompleted
+            </summary>
+        </member>
+        <member name="P:Foundation.Tasks.UnityTask.IsCompleted">
+            <summary>
+             Status == TaskStatus.Success || Status == TaskStatus.Faulted
+            </summary>
+        </member>
+        <member name="P:Foundation.Tasks.UnityTask.IsFaulted">
+            <summary>
+            Status == TaskStatus.Faulted
+            </summary>
+        </member>
+        <member name="P:Foundation.Tasks.UnityTask.IsSuccess">
+            <summary>
+            Status == TaskStatus.Success
+            </summary>
+        </member>
+        <member name="T:Foundation.Tasks.TaskManager">
+            <summary>
+            Manager for running coroutines and scheduling actions to runs in the main thread.
+            </summary>
+            <remarks>
+            Self instantiating. No need to add to scene.
+            </remarks>
+        </member>
+        <member name="M:Foundation.Tasks.TaskManager.ConfirmInit">
+            <summary>
+            Confirms the instance is ready for use
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.TaskManager.WaitForSeconds(System.Int32)">
+            <summary>
+            Scheduled the routine to run (on the main thread)
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.TaskManager.StartRoutine(System.Collections.IEnumerator)">
+            <summary>
+            Scheduled the routine to run (on the main thread)
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.TaskManager.StartRoutine(Foundation.Tasks.TaskManager.CoroutineCommand)">
+            <summary>
+            Scheduled the routine to run (on the main thread)
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.TaskManager.StopRoutine(System.Collections.IEnumerator)">
+            <summary>
+            Scheduled the routine to run (on the main thread)
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.TaskManager.RunOnMainThread(System.Action)">
+            <summary>
+            Schedules the action to run on the main thread
+            </summary>
+            <param name="action"></param>
+        </member>
+        <member name="M:Foundation.Tasks.TaskManager.Log(Foundation.Tasks.TaskManager.LogCommand)">
+            <summary>
+            A thread safe logger
+            </summary>
+            <param name="m"></param>
+        </member>
+        <member name="M:Foundation.Tasks.TaskManager.Awake">
+            <summary>
+            UnityEngine Awake
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.TaskManager.Update">
+            <summary>
+            UnityEngine Update
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.TaskManager.OnApplicationQuit">
+            <summary>
+            UnityEngine OnApplicationQuit
+            </summary>
+        </member>
+        <member name="P:Foundation.Tasks.TaskManager.IsMainThread">
+            <summary>
+            Checks if this is the main thread
+            </summary>
+        </member>
+        <member name="P:Foundation.Tasks.TaskManager.MainThread">
+            <summary>
+            The Main Thread
+            </summary>
+        </member>
+        <member name="P:Foundation.Tasks.TaskManager.Instance">
+            <summary>
+            Static Accessor
+            </summary>
+        </member>
+        <member name="T:Foundation.Tasks.TaskManager.LogCommand">
+            <summary>
+            Thread Safe logger command
+            </summary>
+        </member>
+        <member name="F:Foundation.Tasks.TaskManager.LogCommand.Type">
+            <summary>
+            Color Code
+            </summary>
+        </member>
+        <member name="F:Foundation.Tasks.TaskManager.LogCommand.Message">
+            <summary>
+            Text
+            </summary>
+        </member>
+        <member name="T:Foundation.Tasks.TaskManager.CoroutineCommand">
+            <summary>
+            Thread safe coroutine command
+            </summary>
+        </member>
+        <member name="F:Foundation.Tasks.TaskManager.CoroutineCommand.Coroutine">
+            <summary>
+            The IEnumerator Coroutine
+            </summary>
+        </member>
+        <member name="F:Foundation.Tasks.TaskManager.CoroutineCommand.OnComplete">
+            <summary>
+            Called on complete
+            </summary>
+        </member>
+        <member name="T:Foundation.Tasks.UnityTask`1">
+             <summary>
+             A task encapsulates future work that may be waited on.
+             - Support running actions in background threads 
+             - Supports running coroutines with return results
+             - Use the WaitForRoutine method to wait for the task in a coroutine
+             </summary>
+             <example>
+             <code>
+                 var task = Task.Run(() =>
+                 {
+                    //Debug.Log does not work in
+                    Debug.Log("Sleeping...");
+                    Task.Delay(2000);
+                    Debug.Log("Slept");
+                });
+                // wait for it
+                yield return StartCoroutine(task.WaitRoutine());
+            
+                // check exceptions
+                if(task.IsFaulted)
+                    Debug.LogException(task.Exception)
+            </code>
+            </example>
+        </member>
+        <member name="F:Foundation.Tasks.UnityTask`1.Result">
+            <summary>
+            get the result of the task. Blocking. It is recommended you yield on the wait before accessing this value
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask`1.#ctor">
+            <summary>
+            ctor
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask`1.#ctor(`0)">
+            <summary>
+            Returns the task in the Success state.
+            </summary>
+            <param name="result"></param>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask`1.#ctor(System.Func{`0})">
+            <summary>
+            Creates a new background Task strategy
+            </summary>
+            <param name="function"></param>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask`1.#ctor(System.Delegate,System.Object)">
+            <summary>
+            Creates a new background Task strategy
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask`1.#ctor(System.Func{`0},Foundation.Tasks.TaskStrategy)">
+            <summary>
+            Creates a new task with a specific strategy
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask`1.#ctor(System.Delegate,System.Object,Foundation.Tasks.TaskStrategy)">
+            <summary>
+            Creates a new task with a specific strategy
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask`1.#ctor(System.Collections.IEnumerator)">
+            <summary>
+            Creates a new Coroutine  task
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask`1.#ctor(System.Exception)">
+            <summary>
+            Creates a new Task in a Faulted state
+            </summary>
+            <param name="ex"></param>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask`1.#ctor(Foundation.Tasks.TaskStrategy)">
+            <summary>
+            Creates a new task
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask`1.Execute">
+            <summary>
+            Executes the inner action.
+            </summary>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask`1.ContinueWith(System.Action{Foundation.Tasks.UnityTask{`0}})">
+            <summary>
+            Called after the task is complete
+            </summary>
+            <param name="action"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Foundation.Tasks.UnityTask`1.ConvertTo``1(System.Func{Foundation.Tasks.UnityTask{`0},``0})">
+            <summary>
+            Converts a task of one type into a task of another type.
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="func">function which converts the results</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
