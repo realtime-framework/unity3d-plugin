@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{894F63A0-05F4-41F3-8FD5-6F9391F6C053}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Realtime.Storage</RootNamespace>
+    <AssemblyName>Realtime.Storage</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Foundation.Tasks, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Foundation.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\ItemRef.cs" />
+    <Compile Include="Controllers\ItemSnapshot.cs" />
+    <Compile Include="Controllers\StorageController.cs" />
+    <Compile Include="Controllers\StorageMessenger.cs" />
+    <Compile Include="Controllers\TableRef.cs" />
+    <Compile Include="DataAccess\IStorageRepository.cs" />
+    <Compile Include="DataAccess\StorageSettings.cs" />
+    <Compile Include="DataAccess\StorageConverters.cs" />
+    <Compile Include="DataAccess\StorageRepository.cs" />
+    <Compile Include="Models\ClusterResponse.cs" />
+    <Compile Include="Models\DataKey.cs" />
+    <Compile Include="Models\Enums.cs" />
+    <Compile Include="Models\Filter.cs" />
+    <Compile Include="Models\ItemList.cs" />
+    <Compile Include="Models\ItemListRequest.cs" />
+    <Compile Include="Models\ItemMetadata.cs" />
+    <Compile Include="Models\ItemQueryRequest.cs" />
+    <Compile Include="Models\Key.cs" />
+    <Compile Include="Models\Policy.cs" />
+    <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\StorageError.cs" />
+    <Compile Include="Models\StorageKeyAttribute.cs" />
+    <Compile Include="Models\StorageMetadata.cs" />
+    <Compile Include="Models\StorageRequest.cs" />
+    <Compile Include="Models\StorageResponse.cs" />
+    <Compile Include="Models\TableKey.cs" />
+    <Compile Include="Models\TableList.cs" />
+    <Compile Include="Models\TableMetadata.cs" />
+    <Compile Include="Models\TableThroughput.cs" />
+    <Compile Include="Models\UriPrototype.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LITJson\Realtime.LITJson.csproj">
+      <Project>{c027013f-8698-4153-a0e7-95ad3226f37d}</Project>
+      <Name>realtime.LITJson</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Messaging\Realtime.Messaging.csproj">
+      <Project>{74013b66-4364-4245-8e87-a744b632edff}</Project>
+      <Name>Realtime.Messaging</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

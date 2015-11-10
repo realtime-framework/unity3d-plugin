@@ -1,0 +1,2 @@
+Foundation.Tasks : https://github.com/NVentimiglia/Unity3d-Foundation
+Websockets / websocket-sharp : Included with UnityEngine 5
